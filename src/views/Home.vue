@@ -1,6 +1,7 @@
 <template>
   <div class="home" v-resize:[direction].quiet="onResize" numberLength="6">
     <img alt="Vue logo" src="../assets/logo.png" @click="changeDirection($event, 1)">
+    <div>window Height is: {{length}}</div>
     <HelloWorld msg="Welcome to Your Vue.js App"/>
     <eight-queen @hook:mounted="select"></eight-queen>
   </div>
@@ -19,7 +20,8 @@ export default {
   },
   data () {
     return {
-      direction: 'vertical'
+      direction: 'vertical',
+      length: 0
     }
   },
   methods: {
@@ -28,6 +30,7 @@ export default {
     },
     onResize (val) {
       console.log(val)
+      this.length = val
     },
     changeDirection (e, v) {
       console.log(e, v)

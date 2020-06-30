@@ -2,11 +2,13 @@
  * @Author: xiongzhiqing@everjiankang.com
  * @Date: 2020-06-29 14:39:55
  * @Last Modified by: xiongzhiqing@everjiankang.com
- * @Last Modified time: 2020-06-30 08:57:05
+ * @Last Modified time: 2020-06-30 16:07:06
  */
 
 import Vue from 'vue'
 const win = window
+
+import { throttle } from 'loadsh'
 
 Vue.directive('resize', {
   // 只调用一次，指令第一次绑定到元素时调用。在这里可以进行一次性的初始化设置。
@@ -33,13 +35,12 @@ Vue.directive('resize', {
     // console.log(name, value, oldValue, expression, arg, modifiers, 'inserted', el.attributes.numberLength)
 
     const { value: callback, arg: direction, modifiers } = binding
-    console.log(direction)
 
     const result = () => {
       return direction === 'vertical' ? win.innerHeight : win.innerWidth
     }
 
-    win.addEventListener('resize', () => callback(result()))
+    win.addEventListener('resize', throttle(() => callback(result()), 100))
 
 
     if (!modifiers || !modifiers.quiet) {
