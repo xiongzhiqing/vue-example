@@ -73,7 +73,7 @@ export default {
     }
     return (
       <div>
-        <div class="title">八皇后 JSX Template</div>
+        <h4 class="title">八皇后 JSX Template</h4>
 
         <div class="gird">
           {
