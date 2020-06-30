@@ -1,4 +1,4 @@
-<template>
+<!--<template>
   <div class="hello">
     <h1>{{ msg }}</h1>
     <p>
@@ -29,12 +29,22 @@
     </ul>
   </div>
 </template>
-
+-->
 <script>
 export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  render () {
+    const list = Array(10).fill('').map((v, i) => i)
+    return (
+      <ul>
+        {list.map(item => (
+          <li key={`li-${item}`}>{item + 1}</li>
+        ))}
+      </ul>
+    )
   }
 }
 </script>
