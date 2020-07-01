@@ -21,6 +21,12 @@ const ValidateInput = HocComponent(Input)
 export default {
   name: 'home',
   components: { IndexPage, IndexRenderLess, ValidateInput },
+  created () {
+    // 监听子组件 IndexPage 中dispatch来的register事件
+    this.$on('register', component => {
+      console.log(component, 'dispatch ------')
+    })
+  },
   data () {
     return {
       direction: 'vertical',

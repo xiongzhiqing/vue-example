@@ -4,11 +4,18 @@
 
 <script>
 export default {
+  name: 'customInput',
   props: ['initValue'],
   data () {
     return {
       value: this.initValue
     }
+  },
+  created () {
+    this.$on('refresh', params => {
+      // 刷新事件
+      console.log(params, '刷新事件')
+    })
   }
 }
 </script>

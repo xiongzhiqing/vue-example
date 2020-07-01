@@ -3,7 +3,12 @@
     <template v-slot:header>自定义头部</template>
 
     <template v-slot:default>
-      <h6>Hello Content</h6>
+      <h4>Hello Content</h4>
+      <h3>provide
+与
+inject
+，不止父子传值，祖宗传值也可以:
+        {{appData.a}} - {{appData.b}} - {{appData.c}}</h3>
       <template>
 
         <h4>slot:</h4>
@@ -32,7 +37,11 @@ import Layout from '@/components/layout/Layout'
 import HelloWorld from '@/components/HelloWorld.vue'
 import EightQueen from '@/components/EightQueen'
 import SLoad from '@/components/slot/index.vue'
+import emitter from '@/utils/emitter'
+
 export default {
+  mixins: [emitter],
+  inject: ['appData'],
   props: {
     length: {
       type: Number,
@@ -44,6 +53,10 @@ export default {
     HelloWorld,
     EightQueen,
     SLoad
+  },
+  mounted () {
+    // 在组件渲染完之后， 将组件通过$dispatch将自己注册到Home组件上
+    this.$dispatch('register', 'home', this)
   },
   methods: {
     select () {
