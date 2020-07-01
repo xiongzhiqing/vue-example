@@ -1,46 +1,40 @@
 <template>
   <div class="home" v-resize:[direction].quiet="onResize" numberLength="6">
-    <img alt="Vue logo" src="../assets/logo.png" @click="changeDirection($event, 1)">
+    <img alt="Vue logo" width="80" src="../assets/logo.png" @click="changeDirection($event, 1)">
+    <h2>RenderLess</h2>
+    <index-render-less></index-render-less>
+    <h2>HOC</h2>
+    <validate-input :rules="rules"></validate-input>
     <hr>
-    <h4>slot:</h4>
-    <s-load url="http:xxxx/api" #default={data}>
-      <div >江山如此多娇 -- {{data.name}}</div>
-    </s-load>
-    <hr>
-    <h4>directives:</h4>
-    <div>window Height is: {{length}}</div>
-    <hr>
-    <h4>JSX:</h4>
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-    <hr>
-    <eight-queen @hook:mounted="select"></eight-queen>
-
+    <h2>组件设计：IndexPage</h2>
+    <index-page :length="length"></index-page>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-import EightQueen from '@/components/EightQueen'
-import SLoad from '@/components/slot/index.vue'
-
+import IndexPage from '@/components/layout/IndexPage'
+import IndexRenderLess from '@/components/renderLess/Index'
+import HocComponent from '@/components/HOC/HocComponent'
+import Input from '@/components/HOC/Input'
+const ValidateInput = HocComponent(Input)
 export default {
   name: 'home',
-  components: {
-    HelloWorld,
-    EightQueen,
-    SLoad
-  },
+  components: { IndexPage, IndexRenderLess, ValidateInput },
   data () {
     return {
       direction: 'vertical',
-      length: 0
+      length: 0,
+      rules: [{
+        test: function (value) {
+          return /^\d{1,}$/.test(value)
+        },
+        message: '请输入一个数字'
+      }]
     }
   },
   methods: {
-    select () {
-      console.log('child mounted')
-    },
+
     onResize (val) {
       console.log(val)
       this.length = val
