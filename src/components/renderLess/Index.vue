@@ -1,5 +1,6 @@
 <template>
   <div>
+    <button type="button" @click="changingKey">ChangingKey</button>
     <validate #default={validate} :value="value" :rules="rules">
       <input type="text" @blur="validate" v-model="value">
     </validate>
@@ -13,6 +14,10 @@
 import Validate from '@/components/renderLess/Validate'
 export default {
   name: 'RenderLess',
+  inject: ['changingKey'],
+  created () {
+    console.log('reload ===> changingKey')
+  },
   data: () => ({
     value: 'hi',
     text: 'Hello',

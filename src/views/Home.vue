@@ -1,8 +1,12 @@
 <template>
   <div class="home" v-resize:[direction].quiet="onResize" numberLength="6">
     <img alt="Vue logo" width="80" src="../assets/logo.png" @click="changeDirection($event, 1)">
+    <h2>
+      isReload: {{now}}
+      <button type="button" @click="forceUpdate">forceUpdate</button>
+    </h2>
     <h2>RenderLess</h2>
-    <index-render-less></index-render-less>
+    <index-render-less :key="nowKey"></index-render-less>
     <h2>HOC</h2>
     <validate-input :rules="rules"></validate-input>
     <hr>
@@ -21,6 +25,11 @@ const ValidateInput = HocComponent(Input)
 export default {
   name: 'home',
   components: { IndexPage, IndexRenderLess, ValidateInput },
+  provide () {
+    return {
+      changingKey: this.changingKey
+    }
+  },
   created () {
     // 监听子组件 IndexPage 中dispatch来的register事件
     this.$on('register', component => {
@@ -31,6 +40,8 @@ export default {
     return {
       direction: 'vertical',
       length: 0,
+      now: Date.now(),
+      nowKey: '',
       rules: [{
         test: function (value) {
           return /^\d{1,}$/.test(value)
@@ -40,7 +51,12 @@ export default {
     }
   },
   methods: {
-
+    forceUpdate () {
+      this.$forceUpdate()
+    },
+    changingKey () {
+      this.nowKey = Date.now()
+    },
     onResize (val) {
       console.log(val)
       this.length = val

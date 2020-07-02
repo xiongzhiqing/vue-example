@@ -8,7 +8,6 @@ import Message from '@/components/message/index.js'
 import { init, bind } from '@/utils/customLifeCycle'
 // 初始化生命周期函数，必须在Vue实例化之前确定合并策略
 init()
-
 Vue.use(Message)
 
 Vue.config.productionTip = false
